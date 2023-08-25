@@ -26,8 +26,8 @@ double get_coeff()
     double coeff = 0;
     while (scanf("%lg", &coeff) != 1 || (getchar() != '\n' && getchar() != ' '))
     {
-        printf("invalid value\n");
-        printf("enter a new value\n");
+        printf(COLOR_RED "invalid value\n");
+        printf("enter a new value" COLOR_RESET "\n");
         clear_buffer();
     }
     return coeff;
@@ -41,42 +41,42 @@ Coefficients get_coeffs()
         0,
         0
     };
-    printf("Enter coefficients a, b, c\n");
-    printf("Enter coefficient a\n");
+    printf(COLOR_CYAN "Enter coefficients a, b, c" COLOR_RESET "\n");
+    printf(COLOR_CYAN "Enter coefficient a" COLOR_RESET "\n");
     coeffs.a = get_coeff();
-    printf("Enter coefficient b\n");
+    printf(COLOR_CYAN "Enter coefficient b" COLOR_RESET "\n");
     coeffs.b = get_coeff();
-    printf("Enter coefficient c\n");
+    printf(COLOR_CYAN "Enter coefficient c" COLOR_RESET "\n");
     coeffs.c = get_coeff();
-    printf("Your coefficients: a = %lg, b = %lg, c = %lg\n", coeffs.a, coeffs.b, coeffs.c);
+    printf(COLOR_CYAN "Your coefficients: a = %lg, b = %lg, c = %lg" COLOR_RESET "\n", coeffs.a, coeffs.b, coeffs.c);
     return coeffs;
 }
 
 
 int print_roots(const EquationRoots roots)
 {
-    printf("*****************************************************\n");
-    printf("Answer: ");
+    printf(COLOR_CYAN "*****************************************************" COLOR_RESET "\n");
+    printf(COLOR_GREEN "Answer: " COLOR_RESET);
     switch(roots.n_roots)
     {
     case NO_ROOTS:
-            printf("No roots\n");
+            printf(COLOR_GREEN "No roots" COLOR_RESET "\n");
         break;
 
     case ONE_ROOT:
-            printf("x = %lg\n", roots.x1);
+            printf(COLOR_BLUE "x = %lg" COLOR_RESET "\n", roots.x1);
         break;
 
     case TWO_ROOTS:
-            printf("x1 = %lg, x2 = %lg\n", roots.x1, roots.x2);
+            printf(COLOR_MAGENTA "x1 = %lg, x2 = %lg" COLOR_RESET "\n", roots.x1, roots.x2);
         break;
 
     case INF_ROOTS:
-            printf("Any number\n");
+            printf(COLOR_CYAN "Any number" COLOR_RESET "\n");
         break;
 
     default:
-            printf("main(): ERROR: nRoots = %d\n", roots.n_roots);
+            printf(COLOR_RED "main(): ERROR: nRoots = %d" COLOR_RESET "\n", roots.n_roots);
         return 0;
     }
     return 1;
@@ -97,7 +97,7 @@ void choose_mode(const int argc, char* argv[])
     {
         if (strcmp(argv[i], HELP_MODE) == 0)
         {
-            printf("This program solves quadratic equations\n");
+            printf(COLOR_CYAN "This program solves quadratic equations\n");
             printf("To enter auto test-mode try \"%s test\"\n", argv[0]);
             printf("To enter test-mode with data from file try \"%s test file_name\"\n", argv[0]);
             printf("EXAMPLE:\n");
@@ -105,7 +105,7 @@ void choose_mode(const int argc, char* argv[])
             printf("---------------\n");
             printf("2\n");
             printf("0 0 0 0 0 3\n");
-            printf("1 -3 2 1 2 2\n");
+            printf("1 -3 2 1 2 2" COLOR_RESET "\n");
             i++;
         }
         else if (strcmp(argv[i], TEST_MODE) == 0)
@@ -115,8 +115,8 @@ void choose_mode(const int argc, char* argv[])
                 FILE *file = NULL;
                 if ((file = fopen(argv[i + 1], "r")) == NULL)
                 {
-                    printf("Can't open %s\n", argv[i + 1]);
-                    printf("Try \"%s help\" for help\n", argv[0]);
+                    printf(COLOR_RED "Can't open %s" COLOR_RESET "\n", argv[i + 1]);
+                    printf(COLOR_YELLOW "Try \"%s help\" for help" COLOR_RESET "\n", argv[0]);
                     i += 2;
                     continue;
                 }
@@ -125,20 +125,20 @@ void choose_mode(const int argc, char* argv[])
             }
             else
             {
-                printf("To enter test-mode file name is required\n");
-                printf("Try \"%s help\" for help\n", argv[0]);
+                printf(COLOR_RED "To enter test-mode file name is required" COLOR_RESET "\n");
+                printf(COLOR_YELLOW "Try \"%s help\" for help" COLOR_RESET "\n", argv[0]);
                 i++;
             }
         }
         else if (strcmp(argv[i], AUTO_TEST_MODE) == 0)
         {
-            printf("Succeed %d tests out of %d\n", test_all(), N_TESTS);
+            printf(COLOR_GREEN "Succeed %d tests out of %d" COLOR_RESET "\n", test_all(), N_TESTS);
             i++;
         }
         else
         {
-            printf("\"%s\" arg if not found\n", argv[i]);
-            printf("Try \"%s help\" for help\n", argv[0]);
+            printf(COLOR_RED "\"%s\" arg if not found" COLOR_RESET "\n", argv[i]);
+            printf(COLOR_YELLOW "Try \"%s help\" for help" COLOR_RESET "\n", argv[0]);
             i++;
         }
     }

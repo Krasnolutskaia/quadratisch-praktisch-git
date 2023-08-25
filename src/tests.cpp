@@ -15,7 +15,8 @@ static void close_file(FILE* file)
 {
     if (fclose(file) != 0)
     {
-        printf("Can't close file");
+        printf(COLOR_RED "Can't close file" COLOR_RESET "\n");
+        exit(EXIT_FAILURE);
     }
 }
 
@@ -38,10 +39,10 @@ static int test_one(const TestData* data)
 
     if (!is_equal(x1, data->roots.x1) || !is_equal(x2, data->roots.x2) || n_roots != data->roots.n_roots)
     {
-        printf("FAILED: TEST #%d\n", data->n_test);
+        printf(COLOR_RED "FAILED: TEST #%d\n", data->n_test);
         printf("x1 = %lg, x1_ref = %lg;\nx2 = %lg, x2_ref = %lg;\nn_root = %d, n_root_ref = %d;\n",
                 x1, data->roots.x1, x2, data->roots.x2, n_roots, data->roots.n_roots);
-        printf("a = %lg b = %lg c = %lg\n", data->coeffs.a, data->coeffs.b, data->coeffs.c);
+        printf("a = %lg b = %lg c = %lg" COLOR_RESET "\n", data->coeffs.a, data->coeffs.b, data->coeffs.c);
         return 0;
     }
     return 1;
@@ -53,7 +54,7 @@ void tests_from_file(FILE* file)
     int n_tests = 0;
     if (fscanf(file, "%d", &n_tests) != 1)
     {
-        printf("ERROR: Can't read number of tests\n");
+        printf(COLOR_RED "ERROR: Can't read number of tests" COLOR_RESET "\n");
         exit(EXIT_FAILURE);
     }
 
@@ -72,7 +73,7 @@ void tests_from_file(FILE* file)
             if (fscanf(file, "%lg %lg %lg %lg %lg %d", &data.coeffs.a, &data.coeffs.b, &data.coeffs.c,
                     &data.roots.x1, &data.roots.x2, &data.roots.n_roots) != 6)
             {
-                printf("ERROR: Can't read test #%d\n", i + 1);
+                printf(COLOR_RED "ERROR: Can't read test #%d" COLOR_RESET "\n", i + 1);
                 clear_buffer_file(file);
             }
             else
@@ -82,11 +83,11 @@ void tests_from_file(FILE* file)
             }
         }
 
-        printf("Succeeded test: %d out of %d\n", succeeded_tests, n_tests);
+        printf(COLOR_GREEN "Succeeded test: %d out of %d" COLOR_RESET "\n", succeeded_tests, n_tests);
     }
     else
     {
-        printf("ERROR: Number of tests is zero or less\n");
+        printf(COLOR_RED "ERROR: Number of tests is zero or less" COLOR_RESET "\n");
     }
 
     close_file(file);
