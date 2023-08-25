@@ -24,7 +24,7 @@ void clear_buffer()
 double get_coeff()
 {
     double coeff = 0;
-    while (scanf("%lg", &coeff) != 1 || (getchar() != '\n' && getchar() != ' '))
+    while (scanf("%lg", &coeff) != 1 || (getchar() != '\n'))
     {
         printf(COLOR_RED "invalid value\n");
         printf("enter a new value" COLOR_RESET "\n");

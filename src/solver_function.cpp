@@ -1,6 +1,6 @@
 #include "solver_function.h"
 
-EquationRoots solve_linel(const double a, const double b)
+static EquationRoots solve_linel(const double a, const double b)
 {
     assert(isfinite(a));
     assert(isfinite(b));

@@ -26,9 +26,6 @@ enum NumOfRoots {
     INF_ROOTS,
 };
 
-EquationRoots solve_linel(const double a, const double b);
-
 EquationRoots solve_square(const Coefficients coeffs);
-
 
 #endif
