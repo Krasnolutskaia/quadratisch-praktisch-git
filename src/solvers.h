@@ -1,11 +1,5 @@
-#ifndef SOLVER_FUNCTION_H_
-#define SOLVER_FUNCTION_H_
-
-#include <stdio.h>
-#include <math.h>
-#include <assert.h>
-#include "comparison_with_zero.h"
-
+#ifndef SOLVERS_H_
+#define SOLVERS_H_
 
 struct Coefficients {
     double a;
@@ -25,6 +19,7 @@ enum NumOfRoots {
     TWO_ROOTS,
     INF_ROOTS,
 };
+
 
 EquationRoots solve_square(const Coefficients coeffs);
 

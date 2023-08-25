@@ -1,14 +1,16 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <string.h>
 #include "tests.h"
+#include "solvers.h"
+#include "utilities.h"
 
 
-static bool is_equal(const double a, const double b)
-{
-    if (fabs(a - b) < EPS)
-    {
-        return true;
-    }
-    return false;
-}
+struct TestData {
+    Coefficients coeffs;
+    EquationRoots roots;
+};
 
 
 static void close_file(FILE* file)
@@ -23,23 +25,31 @@ static void close_file(FILE* file)
 
 static void clear_buffer_file(FILE* file)
 {
-    int ch = getc(file);
-    while (ch != '\n' && ch != EOF)
-    {
+    int ch = 0;
+    do {
         ch = getc(file);
     }
+    while (ch != '\n' && ch != EOF);
 }
 
 
-static int test_one(const TestData* data)
+static bool are_tests_different(EquationRoots roots, const TestData* data)
+{
+    const double x1 = roots.x1, x2 = roots.x2;
+    const int n_roots = roots.n_roots;
+    return !is_equal(x1, data->roots.x1) || !is_equal(x2, data->roots.x2) || n_roots != data->roots.n_roots;
+}
+
+
+static int run_one_test(const TestData* data, const int n_test)
 {
     const EquationRoots roots = solve_square(data->coeffs);
     const double x1 = roots.x1, x2 = roots.x2;
     const int n_roots = roots.n_roots;
 
-    if (!is_equal(x1, data->roots.x1) || !is_equal(x2, data->roots.x2) || n_roots != data->roots.n_roots)
+    if (are_tests_different(roots, data))
     {
-        printf(COLOR_RED "FAILED: TEST #%d\n", data->n_test);
+        printf(COLOR_RED "FAILED: TEST #%d\n", n_test);
         printf("x1 = %lg, x1_ref = %lg;\nx2 = %lg, x2_ref = %lg;\nn_root = %d, n_root_ref = %d;\n",
                 x1, data->roots.x1, x2, data->roots.x2, n_roots, data->roots.n_roots);
         printf("a = %lg b = %lg c = %lg" COLOR_RESET "\n", data->coeffs.a, data->coeffs.b, data->coeffs.c);
@@ -49,41 +59,54 @@ static int test_one(const TestData* data)
 }
 
 
-void tests_from_file(FILE* file)
+static bool check_test_data(FILE* file, TestData* data)
 {
-    int n_tests = 0;
-    if (fscanf(file, "%d", &n_tests) != 1)
+    return fscanf(file, "%lg %lg %lg %lg %lg %d", &data->coeffs.a, &data->coeffs.b, &data->coeffs.c,
+                  &data->roots.x1, &data->roots.x2, &data->roots.n_roots) != 6;
+}
+
+
+static int scan_tests_num(FILE* file)
+{
+    int tests_num = 0;
+    if (fscanf(file, "%d", &tests_num) != 1)
     {
         printf(COLOR_RED "ERROR: Can't read number of tests" COLOR_RESET "\n");
+        close_file(file);
         exit(EXIT_FAILURE);
     }
+    return tests_num;
+}
 
-    if (n_tests > 0)
+
+void run_tests_from_file(FILE* file)
+{
+    assert(file != nullptr);
+    int tests_num = scan_tests_num(file);
+
+    if (tests_num > 0)
     {
         TestData data =
         {
             {0, 0, 0},
             {0, 0, NO_ROOTS},
-            0,
         };
         int succeeded_tests = 0;
 
-        for (int i = 0; i < n_tests; i++)
+        for (int i = 1; i <= tests_num; i++)
         {
-            if (fscanf(file, "%lg %lg %lg %lg %lg %d", &data.coeffs.a, &data.coeffs.b, &data.coeffs.c,
-                    &data.roots.x1, &data.roots.x2, &data.roots.n_roots) != 6)
+            if (check_test_data(file, &data))
             {
-                printf(COLOR_RED "ERROR: Can't read test #%d" COLOR_RESET "\n", i + 1);
+                printf(COLOR_RED "ERROR: Can't read test #%d" COLOR_RESET "\n", i);
                 clear_buffer_file(file);
             }
             else
             {
-                data.n_test = i + 1;
-                succeeded_tests += test_one(&data);
+                succeeded_tests += run_one_test(&data, i);
             }
         }
 
-        printf(COLOR_GREEN "Succeeded test: %d out of %d" COLOR_RESET "\n", succeeded_tests, n_tests);
+        printf(COLOR_GREEN "Succeeded test: %d out of %d" COLOR_RESET "\n", succeeded_tests, tests_num);
     }
     else
     {
@@ -94,25 +117,26 @@ void tests_from_file(FILE* file)
 }
 
 
-int test_all()
+void run_auto_test()
 {
     int succeeded_tests = 0;
 
-    TestData all_data[N_TESTS] = {
-        {{0, 0, 0},  {0, 0, INF_ROOTS},  1},
-        {{0, 0, 4},  {0, 0, NO_ROOTS},   2},
-        {{0, 2, -2}, {1, 1, ONE_ROOT},   3},
-        {{1, 2, 2},  {0, 0, NO_ROOTS},   4},
-        {{1, 2, 1},  {-1, -1, ONE_ROOT}, 5},
-        {{1, -3, 2}, {1, 2, TWO_ROOTS},  6},
-        {{1, 0, -4}, {-2, 2, TWO_ROOTS}, 7},
-
+    TestData all_data[] = {
+        {{0, 0, 0},  {0, 0, INF_ROOTS}},
+        {{0, 0, 4},  {0, 0, NO_ROOTS}},
+        {{0, 2, -2}, {1, 1, ONE_ROOT}},
+        {{1, 2, 2},  {0, 0, NO_ROOTS}},
+        {{1, 2, 1},  {-1, -1, ONE_ROOT}},
+        {{1, -3, 2}, {1, 2, TWO_ROOTS}},
+        {{1, 0, -4}, {-2, 2, TWO_ROOTS}},
     };
 
-    for (int i = 0; i < N_TESTS; i++)
+    int tests_num = sizeof(all_data) / sizeof(TestData);
+
+    for (int i = 0; i < tests_num; i++)
     {
-        succeeded_tests += test_one(&all_data[i]);
+        succeeded_tests += run_one_test(&all_data[i], i + 1);
     }
 
-    return succeeded_tests;
+    printf(COLOR_GREEN "Succeed %d tests out of %d" COLOR_RESET "\n", succeeded_tests, tests_num);
 }
