@@ -90,7 +90,7 @@ void run_tests_from_file(FILE* file)
         TestData data =
         {
             {0, 0, 0},
-            {0, 0, NO_ROOTS},
+            {0, 0, NO_ROOTS}, // nan
         };
         int succeeded_tests = 0;
 

@@ -1,3 +1,6 @@
+//==============================================================================================
+//! @file   utilities.h
+//==============================================================================================
 #ifndef UTILITIES_H_
 #define UTILITIES_H_
 
@@ -40,9 +43,8 @@ int compare_with_zero(double n);
 //!
 //! @param  n   number for checking
 //!
-//! @note   Returns 0, if a number is zero;
-//!         returns -1, if a number is less than zero;
-//!         returns 1, if a number is bigger than zero.
+//! @note   Returns true, if a number is zero; 
+//!         returns false, if not
 //!
 //! @par Usage example
 //! @code 

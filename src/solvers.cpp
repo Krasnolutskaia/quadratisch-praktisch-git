@@ -21,9 +21,11 @@ static EquationRoots solve_linear(const double a, const double b)
         if (is_zero(b))
         {
             roots.n_roots = INF_ROOTS;
+            roots.x1 = roots.x2 = 0;
             return roots;
         }
         roots.n_roots = NO_ROOTS;
+        roots.x1 = roots.x2 = 0;
         return roots;
     }
     else
@@ -46,8 +48,8 @@ EquationRoots solve_square(const Coefficients coeffs)
     assert(isfinite(c));
 
     EquationRoots roots = {
-        0,
-        0,
+        nan,
+        nan,
         NO_ROOTS
     };
 
