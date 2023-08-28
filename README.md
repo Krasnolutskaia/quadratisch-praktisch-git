@@ -12,6 +12,7 @@ Solves quadratic equations `ax^2 + bx + с = 0` and prints roots of a equation a
     - [Auto-test mode](#auto-test-mode)
     - [Tests from file](#tests-from-file)
     - [How to make file for tests](#how-to-make-file-for-tests)
+    - [Example](#example)
   
 ## Setup
 
@@ -29,7 +30,7 @@ For help run `.\quadratic.exe --help`
 
 ### Usage example
 
-Coming soon...
+![example](screenshots/example.PNG)
 
 ## Tests
 
@@ -49,9 +50,9 @@ Run `.\quadratic.exe --test [file_name]` to start tests from your file. The prog
    If the equation has no roots, write `0` instead of [number of roots]. If the equation has infinite number of roots, write `3` instead of [number of roots] and `0 0` instead of `[x1] [x2]`.
    If the equation has one root, write same values instead of `[x1]` and `[x2]`.
    
-Example:
+### Example:
+
 test.txt
--------------
-`2`
-`0 0 0 0 0 3`
-`1 -3 2 1 2 2`
+```2```
+```0 0 0 0 0 3```
+```1 -3 2 1 2 2```
