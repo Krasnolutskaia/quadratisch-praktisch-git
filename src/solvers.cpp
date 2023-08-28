@@ -48,8 +48,8 @@ EquationRoots solve_square(const Coefficients coeffs)
     assert(isfinite(c));
 
     EquationRoots roots = {
-        nan,
-        nan,
+        0,
+        0,
         NO_ROOTS
     };
 

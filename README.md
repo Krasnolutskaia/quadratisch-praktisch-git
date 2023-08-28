@@ -4,7 +4,7 @@ Solves quadratic equations `ax^2 + bx + с = 0` and prints roots of a equation a
 
 ## Table of contents
 
-- [Setup](#setup)
+- [Install](#install)
     - [For Windows](#for-windows)
 - [Usage](#usage)
     - [Usage examples](#usage-example)
@@ -14,7 +14,7 @@ Solves quadratic equations `ax^2 + bx + с = 0` and prints roots of a equation a
     - [How to make file for tests](#how-to-make-file-for-tests)
     - [Tests examples](#example)
   
-## Setup
+## Install
 
 ### For Windows
 

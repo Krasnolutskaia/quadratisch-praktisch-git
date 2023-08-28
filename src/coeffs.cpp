@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "coeffs.h"
 #include "utilities.h"
 #include "solvers.h"
 #include "color_print.h"

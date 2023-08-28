@@ -29,16 +29,15 @@ static void clear_buffer_file(FILE* file)
     int ch = 0;
     do {
         ch = getc(file);
-    }
-    while (ch != '\n' && ch != EOF);
+    } while (ch != '\n' && ch != EOF);
 }
 
 
 static bool are_tests_different(EquationRoots roots, const TestData* data)
 {
-    const double x1 = roots.x1, x2 = roots.x2;
-    const int n_roots = roots.n_roots;
-    return !is_equal(x1, data->roots.x1) || !is_equal(x2, data->roots.x2) || n_roots != data->roots.n_roots;
+    return !is_equal(roots.x1, data->roots.x1)
+        || !is_equal(roots.x2, data->roots.x2)
+        || roots.n_roots != data->roots.n_roots;
 }
 
 
@@ -62,7 +61,8 @@ static int run_one_test(const TestData* data, const int n_test)
 
 static bool check_test_data(FILE* file, TestData* data)
 {
-    return fscanf(file, "%lg %lg %lg %lg %lg %d", &data->coeffs.a, &data->coeffs.b, &data->coeffs.c,
+    return fscanf(file, "%lg %lg %lg %lg %lg %d", 
+                  &data->coeffs.a, &data->coeffs.b, &data->coeffs.c,
                   &data->roots.x1, &data->roots.x2, &data->roots.n_roots) != 6;
 }
 
@@ -90,7 +90,7 @@ void run_tests_from_file(FILE* file)
         TestData data =
         {
             {0, 0, 0},
-            {0, 0, NO_ROOTS}, // nan
+            {0, 0, NO_ROOTS}, 
         };
         int succeeded_tests = 0;
 
@@ -123,13 +123,13 @@ void run_auto_test()
     int succeeded_tests = 0;
 
     TestData all_data[] = {
-        {{0, 0, 0},  {0, 0, INF_ROOTS}},
-        {{0, 0, 4},  {0, 0, NO_ROOTS}},
-        {{0, 2, -2}, {1, 1, ONE_ROOT}},
-        {{1, 2, 2},  {0, 0, NO_ROOTS}},
+        {{0, 0, 0},  {0, 0,   INF_ROOTS}},
+        {{0, 0, 4},  {0, 0,   NO_ROOTS}},
+        {{0, 2, -2}, {1, 1,   ONE_ROOT}},
+        {{1, 2, 2},  {0, 0,   NO_ROOTS}},
         {{1, 2, 1},  {-1, -1, ONE_ROOT}},
-        {{1, -3, 2}, {1, 2, TWO_ROOTS}},
-        {{1, 0, -4}, {-2, 2, TWO_ROOTS}},
+        {{1, -3, 2}, {1, 2,   TWO_ROOTS}},
+        {{1, 0, -4}, {-2, 2,  TWO_ROOTS}},
     };
 
     int tests_num = sizeof(all_data) / sizeof(TestData);

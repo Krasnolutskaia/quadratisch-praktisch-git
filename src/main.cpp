@@ -21,27 +21,27 @@
 //{------------------------------------------------------------------------------------------------
 //! Prints help text
 //}------------------------------------------------------------------------------------------------
-void print_help(char file_name[]);
+static void print_help(char file_name[]);
 
 
 //{------------------------------------------------------------------------------------------------
 //! Prints offer for help
 //}------------------------------------------------------------------------------------------------
-void print_offer_help(char file_name[]);
+static void print_offer_help(char file_name[]);
 
 
-void choose_mode(int argc, char* argv[]);
+static void parse_args(int argc, char* argv[]);
 
 
 int main(int argc, char *argv[])
 {
-    choose_mode(argc, argv);
+    parse_args(argc, argv);
 
     return 0;
 }
 
 
-void print_help(char file_name[])
+static void print_help(char file_name[])
 {
     color_print(COLOR_CYAN, "This program solves quadratic equations");
     color_print(COLOR_CYAN, "To enter auto test-mode run \"%s --auto-test\"", file_name);
@@ -55,13 +55,13 @@ void print_help(char file_name[])
 }
 
 
-void print_offer_help(char file_name[])
+static void print_offer_help(char file_name[])
 {
     color_print(COLOR_YELLOW, "Run \"%s help\" for help", file_name);
 }
 
 
-void choose_mode(int argc, char* argv[])
+static void parse_args(int argc, char* argv[])
 {   
     if (argc == 1)
     {
@@ -113,3 +113,4 @@ void choose_mode(int argc, char* argv[])
         }
     }
 }
+//переделать help

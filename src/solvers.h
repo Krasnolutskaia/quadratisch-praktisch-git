@@ -15,7 +15,7 @@
 //! @note   Returns struct of equation roots
 //!
 //! @see    solve_linear()
-//}
+//}------------------------------------------------------
 EquationRoots solve_square(const Coefficients coeffs);
 
 #endif

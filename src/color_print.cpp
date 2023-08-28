@@ -5,7 +5,7 @@
 
 void color_print(const char COLOR[], const char *format, ...)
 {
-    va_list ptr;
+    va_list ptr = NULL;
     printf("%s", COLOR);
     va_start(ptr, format);
     vprintf(format, ptr);
