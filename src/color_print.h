@@ -9,6 +9,15 @@
 #define COLOR_CYAN    "\x1b[36m"
 #define COLOR_RESET   "\x1b[0m"
 
+
+//{--------------------------------------------------------------
+//! Print colorful text
+//!
+//! @param  COLOR   desired text color
+//! @param  format  a list of arguments whose number can vary
+//!
+//! @note Automatically adds "\n" to the end
+//}--------------------------------------------------------------
 void color_print(const char COLOR[], const char* format, ...);
 
 #endif

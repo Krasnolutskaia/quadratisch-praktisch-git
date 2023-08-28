@@ -9,7 +9,7 @@
 //! 
 //! @see    get_coeff()
 //!
-//! @note   Returns struct Coefficients
+//! @note   Returns struct Coefficients with received coefficients from stdin
 //}-------------------------------------------
 Coefficients get_coeffs();
 
@@ -17,7 +17,6 @@ Coefficients get_coeffs();
 //! Prints nummber of roots
 //! 
 //! @param  roots   struct of equation roots
-//!
 //}-------------------------------------------
 int print_roots(const EquationRoots roots);
 
