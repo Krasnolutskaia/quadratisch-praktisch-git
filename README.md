@@ -18,7 +18,7 @@ Solves quadratic equations `ax^2 + bx + с = 0` and prints roots of a equation a
 
 ### For Windows
 
-1. Run `git clone https://github.com/Krasnolutskaia/quadratisch-praktisch-gut.git --depth 1`
+1. Run `git clone https://github.com/Krasnolutskaia/quadratisch-praktisch-gut.git`
 2. Go into the cloned folder with `cd quadratisch-praktisch-gut`
 3. Run `.\compile.bat`
 4. Run `.\quadratic.exe`
@@ -48,7 +48,9 @@ Run `.\quadratic.exe --test [file_name]` to start tests from your file. The prog
 
 1. Write a number of tests on the first line
 2. Use one string for one test, following this template:
-   `[coeff a] [coeff b] [coeff c] [x1] [x2] [number of roots]`
+   ```
+   [coeff a] [coeff b] [coeff c] [x1] [x2] [number of roots]
+   ```
    If the equation has no roots, write `0` instead of [number of roots]. If the equation has infinite number of roots, write `3` instead of [number of roots] and `0 0` instead of `[x1] [x2]`.
    If the equation has one root, write same values instead of `[x1]` and `[x2]`.
    
