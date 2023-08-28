@@ -1,12 +1,11 @@
-//------------------------------------------------
+//{------------------------------------------------------------------------------------------------
 //! Solves a square equation ax^2 + bx + x = 0
 //!
 //! @return Number of roots
 //!
 //! @note   In case of infinite number of roots,
 //!         returns INF_ROOTS
-//------------------------------------------------
-
+//}------------------------------------------------------------------------------------------------
 
 #include <string.h>
 #include <stdlib.h>
@@ -15,25 +14,42 @@
 #include "tests.h"
 #include "utilities.h"
 #include "coeffs.h"
+#include "common.h"
+#include "color_print.h"
+
+
+void print_help(char file_name[]);
+
+void print_offer_help(char file_name[]);
+
+void choose_mode(int argc, char* argv[]);
+
+
+int main(int argc, char *argv[])
+{
+    choose_mode(argc, argv);
+
+    return 0;
+}
 
 
 void print_help(char file_name[])
 {
-    printf(COLOR_CYAN "This program solves quadratic equations\n");
-    printf("To enter auto test-mode try \"%s --auto-test\"\n", file_name);
-    printf("To enter test-mode with data from file try \"%s --test file_name\"\n", file_name);
-    printf("EXAMPLE:\n");
-    printf("input_file_name\n");
-    printf("---------------\n");
-    printf("2\n");
-    printf("0 0 0 0 0 3\n");
-    printf("1 -3 2 1 2 2" COLOR_RESET "\n");
+    color_print(COLOR_CYAN, "This program solves quadratic equations");
+    color_print(COLOR_CYAN, "To enter auto test-mode run \"%s --auto-test\"", file_name);
+    color_print(COLOR_CYAN, "To enter test-mode with data from file run \"%s --test file_name\"", file_name);
+    color_print(COLOR_CYAN, "EXAMPLE:");
+    color_print(COLOR_CYAN, "input_file_name");
+    color_print(COLOR_CYAN, "---------------");
+    color_print(COLOR_CYAN, "2");
+    color_print(COLOR_CYAN, "0 0 0 0 0 3");
+    color_print(COLOR_CYAN, "1 -3 2 1 2 2");
 }
 
 
 void print_offer_help(char file_name[])
 {
-    printf(COLOR_YELLOW "Try \"%s help\" for help" COLOR_RESET "\n", file_name);
+    color_print(COLOR_YELLOW, "Run \"%s help\" for help", file_name);
 }
 
 
@@ -61,7 +77,7 @@ void choose_mode(int argc, char* argv[])
                 FILE *file = fopen(argv[i + 1], "r");
                 if (file == nullptr)
                 {
-                    printf(COLOR_RED "Can't open %s" COLOR_RESET "\n", argv[i + 1]);
+                    color_print(COLOR_RED, "Can't open %s", argv[i + 1]);
                     print_offer_help(argv[0]);
                     i += 2;
                     continue;
@@ -71,7 +87,7 @@ void choose_mode(int argc, char* argv[])
             }
             else
             {
-                printf(COLOR_RED "To enter test-mode file name is required" COLOR_RESET "\n");
+                color_print(COLOR_RED, "To enter test-mode file name is required");
                 print_offer_help(argv[0]);
                 i++;
             }
@@ -83,17 +99,9 @@ void choose_mode(int argc, char* argv[])
         }
         else
         {
-            printf(COLOR_RED "\"%s\" arg if not found" COLOR_RESET "\n", argv[i]);
+            color_print(COLOR_RED, "\"%s\" arg if not found", argv[i]);
             print_offer_help(argv[0]);
             i++;
         }
     }
-}
-
-
-int main(int argc, char *argv[])
-{
-    choose_mode(argc, argv);
-
-    return 0;
 }

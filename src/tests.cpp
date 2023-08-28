@@ -5,6 +5,7 @@
 #include "tests.h"
 #include "solvers.h"
 #include "utilities.h"
+#include "color_print.h"
 
 
 struct TestData {
@@ -17,7 +18,7 @@ static void close_file(FILE* file)
 {
     if (fclose(file) != 0)
     {
-        printf(COLOR_RED "Can't close file" COLOR_RESET "\n");
+        color_print(COLOR_RED, "Can't close file");
         exit(EXIT_FAILURE);
     }
 }
@@ -49,10 +50,10 @@ static int run_one_test(const TestData* data, const int n_test)
 
     if (are_tests_different(roots, data))
     {
-        printf(COLOR_RED "FAILED: TEST #%d\n", n_test);
-        printf("x1 = %lg, x1_ref = %lg;\nx2 = %lg, x2_ref = %lg;\nn_root = %d, n_root_ref = %d;\n",
+        color_print(COLOR_RED, "FAILED: TEST #%d", n_test);
+        color_print(COLOR_RED, "x1 = %lg, x1_ref = %lg;\nx2 = %lg, x2_ref = %lg;\nn_root = %d, n_root_ref = %d;",
                 x1, data->roots.x1, x2, data->roots.x2, n_roots, data->roots.n_roots);
-        printf("a = %lg b = %lg c = %lg" COLOR_RESET "\n", data->coeffs.a, data->coeffs.b, data->coeffs.c);
+        color_print(COLOR_RED, "a = %lg b = %lg c = %lg", data->coeffs.a, data->coeffs.b, data->coeffs.c);
         return 0;
     }
     return 1;
@@ -71,7 +72,7 @@ static int scan_tests_num(FILE* file)
     int tests_num = 0;
     if (fscanf(file, "%d", &tests_num) != 1)
     {
-        printf(COLOR_RED "ERROR: Can't read number of tests" COLOR_RESET "\n");
+        color_print(COLOR_RED, "ERROR: Can't read number of tests");
         close_file(file);
         exit(EXIT_FAILURE);
     }
@@ -97,7 +98,7 @@ void run_tests_from_file(FILE* file)
         {
             if (check_test_data(file, &data))
             {
-                printf(COLOR_RED "ERROR: Can't read test #%d" COLOR_RESET "\n", i);
+                color_print(COLOR_RED,  "ERROR: Can't read test #%d", i);
                 clear_buffer_file(file);
             }
             else
@@ -106,11 +107,11 @@ void run_tests_from_file(FILE* file)
             }
         }
 
-        printf(COLOR_GREEN "Succeeded test: %d out of %d" COLOR_RESET "\n", succeeded_tests, tests_num);
+        color_print(COLOR_GREEN, "Succeeded test: %d out of %d", succeeded_tests, tests_num);
     }
     else
     {
-        printf(COLOR_RED "ERROR: Number of tests is zero or less" COLOR_RESET "\n");
+        color_print(COLOR_RED, "ERROR: Number of tests is zero or less");
     }
 
     close_file(file);
@@ -138,5 +139,5 @@ void run_auto_test()
         succeeded_tests += run_one_test(&all_data[i], i + 1);
     }
 
-    printf(COLOR_GREEN "Succeed %d tests out of %d" COLOR_RESET "\n", succeeded_tests, tests_num);
+    color_print(COLOR_GREEN, "Succeed %d tests out of %d", succeeded_tests, tests_num);
 }

@@ -52,6 +52,9 @@ int compare_with_zero(double n);
 bool is_zero(double n);
 
 
+//{---------------------------------------------------
+//! Clears buffer
+//}---------------------------------------------------
 void clear_buffer();
 
 
