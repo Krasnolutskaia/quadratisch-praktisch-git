@@ -55,11 +55,7 @@ Run `.\quadratic.exe --test [file_name]` to start tests from your file. The prog
 ### Test examples
 
 test.txt
-```
-2
-0 0 0 0 0 3
-1 -3 2 1 2 2
-```
-![Tests from file example](screenshots/tests_from_file_ex.PNG)
-
-![Auto tests example](screenshots/auto_tests_ex.PNG)
+-------------
+`2`
+`0 0 0 0 0 3`
+`1 -3 2 1 2 2`
